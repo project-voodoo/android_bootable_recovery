@@ -445,7 +445,7 @@ void show_partition_menu()
         { "mount /system", "unmount /system", "SYSTEM:" },
         { "mount /data", "unmount /data", "DATA:" },
 #ifdef BOARD_HAS_DATADATA
-        { "mount /dbdata", "umount /dbdata", "DATADATA:" },
+        { "mount /dbdata", "unmount /dbdata", "DATADATA:" },
 #endif   
         { "mount /cache", "unmount /cache", "CACHE:" },
         { "mount /sdcard", "unmount /sdcard", "SDCARD:" },
