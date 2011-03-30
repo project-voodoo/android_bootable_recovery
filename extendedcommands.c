@@ -929,6 +929,7 @@ void show_advanced_menu()
             {
                 ensure_root_path_mounted("SYSTEM:");
                 ensure_root_path_mounted("DATA:");
+                ensure_root_path_mounted("DATADATA:");
                 ui_print("Fixing permissions...\n");
                 __system("fix_permissions");
                 ui_print("Done!\n");
