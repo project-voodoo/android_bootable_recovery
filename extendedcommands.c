@@ -748,6 +748,7 @@ void wipe_battery_stats()
 {
     ensure_root_path_mounted("DATA:");
     remove("/data/system/batterystats.bin");
+    ui_print("Battery Stats have been wiped.\n");
     ensure_root_path_unmounted("DATA:");
 }
 
