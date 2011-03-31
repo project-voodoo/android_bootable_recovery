@@ -453,7 +453,6 @@ void show_partition_menu()
         };
 
     string mtds[MTD_COUNT][2] = {
-        { "format boot", "BOOT:" },
         { "format system", "SYSTEM:" },
         { "format data", "DATA:" },
 #ifdef BOARD_HAS_DATADATA
