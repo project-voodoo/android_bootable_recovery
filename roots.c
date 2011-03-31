@@ -174,6 +174,9 @@ translate_root_path(const char *root_path, char *out_buf, size_t out_buf_len)
     return out_buf;
 }
 
+#define FICETO_SDCARD "/sdcard"
+#define FICETO_SDCARD_ALT "/mnt/sdcard"
+
 static int
 internal_root_mounted(const RootInfo *info)
 {
@@ -194,6 +197,12 @@ internal_root_mounted(const RootInfo *info)
         /* It's already mounted.
          */
         return 0;
+    }
+    if (strcmp(info->mount_point, FICETO_SDCARD) == 0) {
+        volume = find_mounted_volume_by_mount_point(FICETO_SDCARD_ALT);
+        if (volume != NULL) {
+            return 0;
+        }
     }
     return -1;
 }

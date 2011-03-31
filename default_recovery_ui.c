@@ -30,7 +30,7 @@ char* MENU_ITEMS[] = { "reboot system now",
                        "backup and restore",
                        "mounts and storage",
                        "advanced",
-		       "voodoo lagfix",
+		               "lagfix options",
                        NULL };
 
 int device_recovery_start() {

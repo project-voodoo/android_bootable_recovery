@@ -554,8 +554,10 @@ main(int argc, char **argv) {
 	        return mkyaffs2image_main(argc, argv);
 	    if (strstr(argv[0], "unyaffs") != NULL)
 	        return unyaffs_main(argc, argv);
-        if (strstr(argv[0], "amend"))
+        if (strstr(argv[0], "amend")){
+            signature_check_enabled = 0;
             return amend_main(argc, argv);
+        }
         if (strstr(argv[0], "nandroid"))
             return nandroid_main(argc, argv);
         if (strstr(argv[0], "reboot"))
@@ -566,7 +568,6 @@ main(int argc, char **argv) {
 	}
     __system("/sbin/postrecoveryboot.sh");
     create_fstab();
-    
     int is_user_initiated_recovery = 0;
     time_t start = time(NULL);
 
@@ -600,6 +601,10 @@ main(int argc, char **argv) {
 
     device_recovery_start();
 
+    __system("/sbin/mountandprep.sh");
+    //ensure_root_path_mounted("DATA:");
+    //ensure_root_path_mounted("DATADATA:");
+    
     fprintf(stderr, "Command:");
     for (arg = 0; arg < argc; arg++) {
         fprintf(stderr, " \"%s\"", argv[arg]);
@@ -664,6 +669,7 @@ main(int argc, char **argv) {
     // Otherwise, get ready to boot the main system...
     finish_recovery(send_intent);
     ui_print("Rebooting...\n");
+    __system("/sbin/endrecovery.sh");
     sync();
     reboot(RB_AUTOBOOT);
     return EXIT_SUCCESS;
