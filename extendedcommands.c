@@ -767,8 +767,6 @@ void show_advanced_menu()
                             "Restart adbd",
                             "Enable Nandroid Progress",
                             "Disable Nandroid Progress",
-                            "Enable Puzzle LockScreen",
-                            "Disable Puzzle LockScreen",
                             "Enable Yes/No Confirmation",
                             "Disable Yes/No Confirmation",
 #ifndef BOARD_HAS_SMALL_RECOVERY
@@ -853,27 +851,12 @@ void show_advanced_menu()
             }
             case 9:
             {
-                ui_print("\nEnabling TouchWiz puzzle piece lockscreen\n");
-                ensure_root_path_mounted("DATA:");
-                __system("/sbin/mkdir -p /data/local");
-                __system("/sbin/busybox touch /data/local/enable_glass_lock");
-                break;
-            }
-            case 10:
-            {
-                ui_print("\nDisabling TouchWiz puzzle piece lockscreen\n");
-                ensure_root_path_mounted("DATA:");
-                __system("/sbin/busybox rm /data/local/enable_glass_lock");
-                break;
-            }
-            case 11:
-            {
                 ui_print("\nEnabling Yes/No confirmation during install/restore\n");
                 ensure_root_path_mounted("SDCARD:");
                 __system("/sbin/busybox rm /sdcard/clockworkmod/.no_confirm");
                 break;
             }
-            case 12:
+            case 10:
             {
                 ui_print("\nDisabling Yes/No confirmation during install/restore\n");
                 ensure_root_path_mounted("SDCARD:");
@@ -881,7 +864,7 @@ void show_advanced_menu()
                 __system("/sbin/busybox touch /sdcard/clockworkmod/.no_confirm");
                 break;
             }
-            case 13:
+            case 11:
             {
                 static char* ext_sizes[] = { "128M",
                                              "256M",
@@ -924,7 +907,7 @@ void show_advanced_menu()
                     ui_print("An error occured while partitioning your SD Card. Please see /tmp/recovery.log for more details.\n");
                 break;
             }
-            case 14:
+            case 12:
             {
                 ensure_root_path_mounted("SYSTEM:");
                 ensure_root_path_mounted("DATA:");
