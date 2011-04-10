@@ -1003,6 +1003,77 @@ void show_advanced_menu()
     }
 }
 
+void show_voodoo_menu() {
+  ensure_path_mounted("/sdcard");
+  static char* headers[] = {  "Voodoo lagfix menu",
+                              "",
+                              NULL
+  };
+
+  static char* list[] = { "disable lagfix",
+                          "enable  lagfix               (default)",
+                          "/system lagfix on            (default)",
+                          "/system lagfix off",
+                          "debug on",
+                          "debug off                    (default)",
+                          NULL
+    };
+
+    for (;;)
+    {
+        FILE* f = fopen("/voodoo/run/lagfix_enabled","r");
+        if (f==NULL) {
+          ui_print("\nVoodoo lagfix is actually: disabled\n");
+        } else {
+          ui_print("\nVoodoo lagfix is actually: enabled\n");
+          fclose(f);
+        }
+
+	__system("/voodoo/bin/is_lagfix_config_enabled");
+        f = fopen("/voodoo/run/lagfix_config_enabled","r");
+        if (f==NULL) {
+          ui_print("                next boot: disabled\n");
+        } else {
+          ui_print("                next boot: enabled\n");
+          fclose(f);
+        }
+
+         ui_print("\nOptions:\n");
+
+	__system("/voodoo/bin/is_lagfix_system_conversion_enabled");
+        f = fopen("/voodoo/run/lagfix_system_conversion_enabled","r");
+        if (f==NULL) {
+          ui_print("\n /system lagfix conversion: no\n");
+        } else {
+          ui_print("\n /system lagfix conversion: yes\n");
+          fclose(f);
+        }
+
+	__system("/voodoo/bin/is_lagfix_debug_mode_enabled");
+        f = fopen("/voodoo/run/lagfix_debug_enabled","r");
+        if (f==NULL) {
+          ui_print("               debug mode: no\n");
+        } else {
+          fclose(f);
+          ui_print("               debug mode: yes\n");
+        }
+          ui_print("\n\n\n\n\n\n\n\n");
+
+       int chosen_item = get_menu_selection(headers, list, 0, 0);
+        if (chosen_item == GO_BACK)
+            break;
+        switch (chosen_item)
+        {
+          case 0: __system("/voodoo/bin/disable_lagfix");break;
+          case 1: __system("/voodoo/bin/enable_lagfix");break;
+          case 2: __system("/voodoo/bin/unset_system_as_rfs");break;
+          case 3: __system("/voodoo/bin/set_system_as_rfs");break;
+          case 4: __system("/voodoo/bin/enable_debug_mode");break;
+          case 5: __system("/voodoo/bin/disable_debug_mode");break;
+        }
+    }
+}
+
 void write_fstab_root(char *path, FILE *file)
 {
     Volume *vol = volume_for_path(path);
